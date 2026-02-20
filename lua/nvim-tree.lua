@@ -283,6 +283,7 @@ local DEFAULT_OPTS = { -- default-config-start
   sync_root_with_cwd = false,
   reload_on_bufenter = false,
   respect_buf_cwd = false,
+  resolve_symlinks = true,
   select_prompts = false,
   sort = {
     sorter = "name",
@@ -580,6 +581,7 @@ local ACCEPTED_TYPES = {
       padding = { "function", "number" },
     },
   },
+  resolve_symlinks = { "boolean", "string" }, -- accept string for backward compatibility or flexibility, though defaults to boolean
   renderer = {
     hidden_display = { "function", "string" },
     group_empty = { "boolean", "function" },
@@ -794,6 +796,7 @@ function M.setup(conf)
   require("nvim-tree.diagnostics").setup(opts)
   require("nvim-tree.explorer"):setup(opts)
   require("nvim-tree.explorer.watch").setup(opts)
+  require("nvim-tree.core").setup(opts)
   require("nvim-tree.git").setup(opts)
   require("nvim-tree.git.utils").setup(opts)
   require("nvim-tree.view").setup(opts)

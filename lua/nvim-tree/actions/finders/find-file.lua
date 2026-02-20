@@ -18,8 +18,18 @@ function M.fn(path)
     return
   end
 
-  -- always match against the real path
-  local path_real = vim.loop.fs_realpath(path)
+  local config = require("nvim-tree").get_config()
+  local path_real
+  if config and config.resolve_symlinks then
+    path_real = vim.loop.fs_realpath(path)
+  else
+    local stat = vim.loop.fs_stat(path)
+    if stat then
+      path_real = vim.fn.fnamemodify(path, ":p")
+      path_real = utils.path_remove_trailing(path_real)
+    end
+  end
+
   if not path_real then
     return
   end

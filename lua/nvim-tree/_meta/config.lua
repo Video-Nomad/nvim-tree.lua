@@ -33,6 +33,8 @@ error("Cannot require a meta file")
 ---
 ---{respect_buf_cwd} changes the [current-directory] of nvim-tree to that of new buffer's when opening nvim-tree.
 ---
+---{resolve_symlinks} changes whether nvim-tree resolves symlinked paths to their physical path, or uses the logical path.
+---
 ---{select_prompts} uses [vim.ui.select()] style prompts. Necessary when using a UI prompt decorator such as dressing.nvim or telescope-ui-select.nvim
 ---@class nvim_tree.config
 ---
@@ -68,6 +70,9 @@ error("Cannot require a meta file")
 ---
 ---(default: `false`)
 ---@field respect_buf_cwd? boolean
+---
+---(default: `true`)
+---@field resolve_symlinks? boolean|string
 ---
 ---(default: `false`)
 ---@field select_prompts? boolean

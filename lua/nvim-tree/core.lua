@@ -2,8 +2,15 @@ local events = require("nvim-tree.events")
 local notify = require("nvim-tree.notify")
 local view = require("nvim-tree.view")
 local log = require("nvim-tree.log")
+local utils = require("nvim-tree.utils")
 
 local M = {}
+
+local _config = {}
+
+function M.setup(opts)
+  _config = opts
+end
 
 ---@type Explorer|nil
 local TreeExplorer = nil
@@ -20,9 +27,23 @@ function M.init(foldername)
   local err, path
 
   if foldername then
-    path, err = vim.loop.fs_realpath(foldername)
+    if _config.resolve_symlinks then
+      path, err = vim.loop.fs_realpath(foldername)
+    else
+      local stat = vim.loop.fs_stat(foldername)
+      if stat then
+        path = vim.fn.fnamemodify(foldername, ":p")
+        path = utils.path_remove_trailing(path)
+      else
+        err = "ENOENT: no such file or directory: " .. foldername
+      end
+    end
   else
-    path, err = vim.loop.cwd()
+    if _config.resolve_symlinks then
+      path, err = vim.loop.cwd()
+    else
+      path = vim.fn.getcwd()
+    end
   end
   if path then
     TreeExplorer = require("nvim-tree.explorer")({ path = path })

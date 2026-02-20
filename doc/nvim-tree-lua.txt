@@ -1010,6 +1010,9 @@ Config                                                      *nvim-tree-config*
     {respect_buf_cwd} changes the |current-directory| of nvim-tree to that of
     new buffer's when opening nvim-tree.
 
+    {resolve_symlinks} changes whether nvim-tree resolves symlinked paths to
+    their physical path. Set to false to preserve logical paths.
+
     {select_prompts} uses |vim.ui.select()| style prompts. Necessary when
     using a UI prompt decorator such as dressing.nvim or
     telescope-ui-select.nvim
@@ -1027,6 +1030,7 @@ Config                                                      *nvim-tree-config*
       • {sync_root_with_cwd}?                  (`boolean`) (default: `false`)
       • {reload_on_bufenter}?                  (`boolean`) (default: `false`)
       • {respect_buf_cwd}?                     (`boolean`) (default: `false`)
+      • {resolve_symlinks}?                    (`boolean|string`) (default: `true`)
       • {select_prompts}?                      (`boolean`) (default: `false`)
       • {sort}?                                (`nvim_tree.config.sort`)
                                                |nvim_tree.config.sort|
